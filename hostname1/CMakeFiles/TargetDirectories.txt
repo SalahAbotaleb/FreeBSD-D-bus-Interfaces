@@ -1,0 +1,3 @@
+/home/salah/FreeBSD-D-bus-Interfaces/hostname1/CMakeFiles/hostname1.dir
+/home/salah/FreeBSD-D-bus-Interfaces/hostname1/CMakeFiles/edit_cache.dir
+/home/salah/FreeBSD-D-bus-Interfaces/hostname1/CMakeFiles/rebuild_cache.dir

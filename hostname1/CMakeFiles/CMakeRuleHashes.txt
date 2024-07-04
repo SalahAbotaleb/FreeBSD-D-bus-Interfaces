@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+bdbf7c02d30c87d141cd408ed0f28a9a hostname1.cpp
+0664172deea5de3a11d2f31b59f1a3f9 hostname1.moc
