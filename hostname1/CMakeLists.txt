@@ -22,4 +22,6 @@ message(STATUS "CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 
 install(TARGETS hostname1 RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.freedesktop.hostname1.service DESTINATION /usr/local/share/dbus-1/services)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.freedesktop.hostname1.service DESTINATION /usr/local/share/dbus-1/system-services)
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/org.freedesktop.hostname1.conf DESTINATION /usr/local/share/dbus-1/system.d)

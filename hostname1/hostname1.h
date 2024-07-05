@@ -4,7 +4,7 @@
 
 class Hostname1 : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QString hostname READ Hostname WRITE SetHostname);
+    Q_PROPERTY(QString Hostname READ Hostname WRITE SetHostname);
 
    private:
     QString m_hostname;
