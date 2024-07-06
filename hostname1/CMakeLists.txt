@@ -12,7 +12,7 @@ find_package(Qt5 REQUIRED COMPONENTS DBus)
 qt_add_dbus_adaptor(GENERATED_SOURCES org.freedesktop.hostname1.xml hostname1.h Hostname1)
 
 # Add executable target
-add_executable(hostname1 main.cpp hostname1.cpp ${GENERATED_SOURCES})
+add_executable(hostname1 main.cpp hostname1.cpp logger.cpp ${GENERATED_SOURCES})
 
 # Link Qt5 libraries
 target_link_libraries(hostname1 Qt5::Core Qt5::DBus)
