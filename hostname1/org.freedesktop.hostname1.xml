@@ -5,6 +5,9 @@
     <property name="StaticHostname" type="s" access="read" />
     <property name="PrettyHostname" type="s" access="read" />
     <property name="IconName" type="s" access="read" />
+    <property name="Chassis" type="s" access="read" />
+    <property name="Deployment" type="s" access="read" />
+    <property name="Location" type="s" access="read" />
     <method name="SetHostname">
       <arg name="name" type="s" direction="in" />
       <arg name="user_interaction" type="b" direction="in" />
@@ -20,6 +23,22 @@
     <method name="SetIconName">
       <arg name="name" type="s" direction="in" />
       <arg name="user_interaction" type="b" direction="in" />
+    </method>
+    <method name="SetChassis">
+      <arg name="name" type="s" direction="in" />
+      <arg name="user_interaction" type="b" direction="in" />
+    </method>
+    <method name="SetDeployment">
+      <arg name="name" type="s" direction="in" />
+      <arg name="user_interaction" type="b" direction="in" />
+    </method>
+    <method name="SetLocation">
+      <arg name="name" type="s" direction="in" />
+      <arg name="user_interaction" type="b" direction="in" />
+    </method>
+    <method name="GetProductUUID">
+      <arg name="interactive" type="b" direction="in" />
+      <arg name="uuid" type="ay" direction="out" />
     </method>
   </interface>
 </node>
