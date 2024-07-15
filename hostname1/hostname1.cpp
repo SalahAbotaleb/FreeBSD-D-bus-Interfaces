@@ -286,3 +286,32 @@ QByteArray Hostname1::MachineID() const {
 QByteArray Hostname1::BootID() const {
     return QByteArray();
 }
+
+QString Hostname1::Describe() {
+    QString json = "{";
+    json += "\"Hostname\": \"" + Hostname() + "\",";
+    json += "\"StaticHostname\": \"" + StaticHostname() + "\",";
+    json += "\"PrettyHostname\": \"" + PrettyHostname() + "\",";
+    json += "\"IconName\": \"" + IconName() + "\",";
+    json += "\"Chassis\": \"" + Chassis() + "\",";
+    json += "\"Deployment\": \"" + Deployment() + "\",";
+    json += "\"Location\": \"" + Location() + "\",";
+    json += "\"ProductUUID\": \"" + GetProductUUID(false) + "\",";
+    json += "\"HardwareSerial\": \"" + GetHardwareSerial() + "\",";
+    json += "\"KernelName\": \"" + KernelName() + "\",";
+    json += "\"KernelRelease\": \"" + KernelRelease() + "\",";
+    json += "\"KernelVersion\": \"" + KernelVersion() + "\",";
+    json += "\"OperatingSystemPrettyName\": \"" + OperatingSystemPrettyName() + "\",";
+    json += "\"OperatingSystemCPEName\": \"" + OperatingSystemCPEName() + "\",";
+    json += "\"OperatingSystemPrettyCPEName\": \"" + OperatingSystemPrettyCPEName() + "\",";
+    json += "\"HomeURL\": \"" + HomeURL() + "\",";
+    json += "\"HardwareVendor\": \"" + HardwareVendor() + "\",";
+    json += "\"HardwareModel\": \"" + HardwareModel() + "\",";
+    json += "\"FirmwareVersion\": \"" + FirmwareVersion() + "\",";
+    json += "\"FirmwareVendor\": \"" + FirmwareVendor() + "\",";
+    json += "\"FirmwareDate\": \"" + QString::number(FirmwareDate()) + "\",";
+    json += "\"MachineID\": \"" + MachineID() + "\",";
+    json += "\"BootID\": \"" + BootID() + "\"";
+    json += "}";
+    return json;
+}

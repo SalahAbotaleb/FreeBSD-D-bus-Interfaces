@@ -27,6 +27,7 @@ class Hostname1 : public QObject {
     Q_PROPERTY(quint64 FirmwareDate READ FirmwareDate);
     Q_PROPERTY(QByteArray MachineID READ MachineID);
     Q_PROPERTY(QByteArray BootID READ BootID);
+    Q_PROPERTY(QString Describe READ Describe);
 
    private:
     QString GetValueFromMachineInfo(const QString& key) const;
@@ -74,4 +75,5 @@ class Hostname1 : public QObject {
     quint64 FirmwareDate() const;
     QByteArray MachineID() const;
     QByteArray BootID() const;
+    QString Describe();
 };

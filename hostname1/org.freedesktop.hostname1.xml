@@ -24,6 +24,7 @@
     <property name="MachineID" type="ay" access="read" />
     <property name="BootID" type="ay" access="read" />
     <!-- <property name="VSockCID" type="u" access="read" /> -->
+    <property name="Describe" type="s" access="read" />
     <method name="SetHostname">
       <arg name="name" type="s" direction="in" />
       <arg name="user_interaction" type="b" direction="in" />
