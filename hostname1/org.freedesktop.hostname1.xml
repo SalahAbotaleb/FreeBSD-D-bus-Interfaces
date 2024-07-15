@@ -8,6 +8,22 @@
     <property name="Chassis" type="s" access="read" />
     <property name="Deployment" type="s" access="read" />
     <property name="Location" type="s" access="read" />
+    <property name="KernelName" type="s" access="read" />
+    <property name="KernelRelease" type="s" access="read" />
+    <property name="KernelVersion" type="s" access="read" />
+    <property name="OperatingSystemPrettyName" type="s" access="read" />
+    <property name="OperatingSystemCPEName" type="s" access="read" />
+    <property name="OperatingSystemPrettyCPEName" type="s" access="read" />
+    <!-- <property name="OperatingSystemSupportEnd" type="t" access="read" /> -->
+    <property name="HomeURL" type="s" access="read" />
+    <property name="HardwareModel" type="s" access="read" />
+    <property name="HardwareVendor" type="s" access="read" />
+    <property name="FirmwareVersion" type="s" access="read" />
+    <property name="FirmwareVendor" type="s" access="read" />
+    <property name="FirmwareDate" type="t" access="read" />
+    <property name="MachineID" type="ay" access="read" />
+    <property name="BootID" type="ay" access="read" />
+    <!-- <property name="VSockCID" type="u" access="read" /> -->
     <method name="SetHostname">
       <arg name="name" type="s" direction="in" />
       <arg name="user_interaction" type="b" direction="in" />
@@ -39,6 +55,9 @@
     <method name="GetProductUUID">
       <arg name="interactive" type="b" direction="in" />
       <arg name="uuid" type="ay" direction="out" />
+    </method>
+    <method name="GetHardwareSerial">
+      <arg name="serial" type="s" direction="out" />
     </method>
   </interface>
 </node>

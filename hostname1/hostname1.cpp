@@ -1,15 +1,15 @@
 #include "hostname1.h"
 
 #include <limits.h>
+#include <sys/utsname.h>
 #include <unistd.h>
 
 #include <QDebug>
 #include <QFile>
 #include <QProcess>
-#include <QSettings>
+#include <QTextStream>
 
 #include "logger.h"
-
 Hostname1::Hostname1() {
 }
 
@@ -168,10 +168,10 @@ void Hostname1::SetLocation(const QString& location, bool user_interaction) {
     SetLocation(location);
 }
 
-QString Hostname1::GetChassisDefaultFromDmidecode() const {
+QString Hostname1::GetValueFromDmiDecode(const QString& key) const {
     QProcess process;
     const QString command = "dmidecode";
-    const QStringList arguments = {"-s", "chassis-type"};
+    const QStringList arguments = {"-s", key};
     process.start(command, arguments);
     process.waitForFinished();
     QString result = process.readAllStandardOutput();
@@ -179,13 +179,110 @@ QString Hostname1::GetChassisDefaultFromDmidecode() const {
     return result;
 }
 
+QString Hostname1::GetChassisDefaultFromDmidecode() const {
+    return GetValueFromDmiDecode("chassis-type");
+}
+
+QString Hostname1::GetValueFromOSRelease(const QString& key) const {
+    QFile file("/etc/os-release");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return QString();
+    }
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        if (line.startsWith(key + "=")) {
+            file.close();
+            QString str = line.split("=").at(1);
+            return str.replace("\"", "");
+        }
+    }
+    file.close();
+    return QString();
+}
+
 QByteArray Hostname1::GetProductUUID(bool interactive) const {
-    QProcess process;
-    const QString command = "dmidecode";
-    const QStringList arguments = {"-s", "system-uuid"};
-    process.start(command, arguments);
-    process.waitForFinished();
-    QByteArray result = process.readAllStandardOutput();
-    result = result.trimmed();
-    return result;
+    return GetValueFromDmiDecode("system-uuid").toUtf8();
+}
+
+QString Hostname1::GetHardwareSerial() const {
+    return GetValueFromDmiDecode("system-serial-number");
+}
+
+QString Hostname1::KernelName() const {
+    struct utsname uts;
+    uname(&uts);
+    return uts.sysname;
+}
+
+QString Hostname1::KernelRelease() const {
+    struct utsname uts;
+    uname(&uts);
+    return uts.release;
+}
+
+QString Hostname1::KernelVersion() const {
+    struct utsname uts;
+    uname(&uts);
+    return uts.version;
+}
+
+QString Hostname1::OperatingSystemPrettyName() const {
+    return GetValueFromOSRelease("PRETTY_NAME");
+}
+
+QString Hostname1::OperatingSystemCPEName() const {
+    return GetValueFromOSRelease("CPE_NAME");
+}
+
+QString Hostname1::OperatingSystemPrettyCPEName() const {
+    return OperatingSystemCPEName();
+}
+
+QString Hostname1::HomeURL() const {
+    return GetValueFromOSRelease("HOME_URL");
+}
+
+QString Hostname1::HardwareVendor() const {
+    return GetValueFromDmiDecode("system-manufacturer");
+}
+
+QString Hostname1::HardwareModel() const {
+    return GetValueFromDmiDecode("system-product-name");
+}
+
+QString Hostname1::FirmwareVersion() const {
+    return GetValueFromDmiDecode("bios-version");
+}
+
+QString Hostname1::FirmwareVendor() const {
+    return GetValueFromDmiDecode("bios-vendor");
+}
+
+quint64 Hostname1::FirmwareDate() const {
+    QString dateStr = GetValueFromDmiDecode("bios-release-date");
+    QDateTime date = QDateTime::fromString(dateStr, "MM/dd/yyyy");
+
+    if (!date.isValid()) {
+        return UINT64_MAX;
+    }
+
+    // Convert QDateTime to seconds since the UNIX epoch, then to microseconds
+    quint64 dateInMicroseconds = static_cast<uint64_t>(date.toSecsSinceEpoch()) * 1000000;
+    return dateInMicroseconds;
+}
+
+QByteArray Hostname1::MachineID() const {
+    QFile file("/etc/machine-id");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return QByteArray();
+    }
+    QTextStream in(&file);
+    QString line = in.readLine();
+    file.close();
+    return line.toUtf8();
+}
+
+QByteArray Hostname1::BootID() const {
+    return QByteArray();
 }
